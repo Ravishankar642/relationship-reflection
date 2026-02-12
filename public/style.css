@@ -14,10 +14,10 @@ body {
 }
 
 /* =========================
-   BODY — SINGLE SOURCE OF TRUTH
+   BODY (MOBILE-FIRST)
 ========================= */
 body {
-    background: #000000;
+    background: #000;
     color: #eaeaea;
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -38,6 +38,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 16px;
 }
 
 /* =========================
@@ -48,19 +49,19 @@ body {
     max-width: 380px;
     background: #121212;
     border: 1px solid #262626;
-    border-radius: 12px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 24px;
 }
 
 /* =========================
    HEADINGS & TEXT
 ========================= */
 h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     text-align: center;
-    color: #ffffff;
-    margin-bottom: 12px;
+    color: #fff;
+    margin-bottom: 10px;
 }
 
 .subtitle {
@@ -68,7 +69,7 @@ h1 {
     line-height: 1.6;
     color: #a8a8a8;
     text-align: center;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .info-box {
@@ -76,11 +77,11 @@ h1 {
     line-height: 1.6;
     color: #8e8e8e;
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
 .disclaimer {
-    margin-top: 20px;
+    margin-top: 18px;
     font-size: 11px;
     color: #8e8e8e;
     text-align: center;
@@ -90,7 +91,7 @@ h1 {
    QUESTIONS
 ========================= */
 .question {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     font-size: 14px;
     color: #eaeaea;
 }
@@ -103,17 +104,17 @@ select,
 textarea {
     width: 100%;
     margin-top: 8px;
-    padding: 11px 12px;
-    background: #000000;
+    padding: 12px;
+    background: #000;
     border: 1px solid #262626;
-    border-radius: 8px;
+    border-radius: 10px;
     color: #eaeaea;
-    font-size: 14px;
+    font-size: 15px;
     font-family: inherit;
 }
 
 textarea {
-    min-height: 80px;
+    min-height: 90px;
     resize: vertical;
 }
 
@@ -123,31 +124,41 @@ textarea::placeholder {
 }
 
 /* =========================
-   BUTTONS
+   BUTTONS (TOUCH FRIENDLY)
 ========================= */
 button {
     width: 100%;
-    padding: 11px;
+    padding: 14px;
     margin-top: 14px;
 
     background: linear-gradient(135deg, #fd5949, #d6249f, #285AEB);
     color: #ffffff;
 
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
 
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
-    cursor: pointer;
-}
 
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    cursor: pointer;
+    touch-action: manipulation;
 }
 
 button.secondary {
     background: #262626;
+}
+
+/* Big YES button */
+button.big {
+    padding: 18px;
+    font-size: 17px;
+}
+
+/* Small NO button */
+button.small {
+    padding: 10px;
+    font-size: 13px;
+    opacity: 0.85;
 }
 
 /* =========================
@@ -155,11 +166,11 @@ button.secondary {
 ========================= */
 pre {
     margin-top: 20px;
-    padding: 14px;
-    background: #000000;
+    padding: 16px;
+    background: #000;
     border: 1px solid #262626;
-    border-radius: 8px;
-    font-size: 13px;
+    border-radius: 12px;
+    font-size: 14px;
     line-height: 1.6;
     white-space: pre-wrap;
     color: #eaeaea;
@@ -180,12 +191,22 @@ pre {
 }
 
 /* =========================
+   ANNOUNCEMENT SCREENS
+========================= */
+.announce {
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* =========================
    OPEN BETA OVERLAY
 ========================= */
 #beta-overlay {
     position: fixed;
     inset: 0;
-    background: #000000;
+    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -200,10 +221,32 @@ pre {
 }
 
 #beta-text {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 500;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
     line-height: 1.4;
-    max-width: 80%;
+    max-width: 90%;
+}
+
+/* =========================
+   DESKTOP ENHANCEMENTS
+========================= */
+@media (min-width: 768px) {
+    .page {
+        padding: 0;
+    }
+
+    .container {
+        padding: 28px;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .announce {
+        font-size: 32px;
+    }
 }

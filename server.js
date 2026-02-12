@@ -16,11 +16,30 @@ const supabase = createClient(
 );
 
 /* =========================
-   SAVE EVERYTHING
+   ANALYSIS LOGIC
+========================= */
+function analyzeAnswers(answers = []) {
+    let score = 0;
+
+    answers.forEach(a => {
+        const t = String(a).toLowerCase();
+        if (t.includes("strongly agree")) score += 3;
+        else if (t.includes("agree")) score += 2;
+        else if (t.includes("disagree")) score -= 1;
+    });
+
+    if (score >= 5) return "High emotional balance detected.";
+    if (score >= 2) return "Mixed emotional signals detected.";
+    return "Emotional strain or imbalance detected.";
+}
+
+/* =========================
+   SAVE ENDPOINT (ALL FLOWS)
 ========================= */
 app.post("/save", async (req, res) => {
     try {
         const {
+            sessionId,
             userName,
             relationshipStatus,
             flow,
@@ -29,10 +48,11 @@ app.post("/save", async (req, res) => {
         } = req.body;
 
         const payload = {
+            session_id: sessionId || null,
             user_name: userName || null,
             relationship_status: relationshipStatus || null,
             flow: flow || null,
-            answers: answers || null,
+            answers: Array.isArray(answers) ? answers : null,
             result: result || null
         };
 
@@ -57,45 +77,54 @@ app.post("/save", async (req, res) => {
 });
 
 /* =========================
-   ANALYZE (RELATIONSHIP)
+   RELATIONSHIP ANALYSIS
 ========================= */
-function analyzeAnswers(answers) {
-    let score = 0;
-    answers.forEach(a => {
-        const t = a.toLowerCase();
-        if (t.includes("agree")) score += 2;
-        if (t.includes("disagree")) score -= 1;
-    });
-    return score >= 3
-        ? "High balance and emotional stability detected."
-        : "Some emotional gaps or unresolved tension detected.";
-}
-
 app.post("/analyze", async (req, res) => {
-    const { answers, userName, relationshipStatus } = req.body;
-
-    const reflection = analyzeAnswers(answers || []);
-
-    // SAVE RELATIONSHIP RESULT
-    await fetch("http://localhost:3000/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+    try {
+        const {
+            sessionId,
             userName,
             relationshipStatus,
-            flow: "relationship",
-            answers,
-            result: reflection
-        })
-    });
+            answers
+        } = req.body;
 
-    res.json({ result: reflection });
+        if (!Array.isArray(answers)) {
+            return res.status(400).json({ result: "Invalid answers." });
+        }
+
+        const reflection = analyzeAnswers(answers);
+
+        /* 🔴 IMPORTANT FIX:
+           SAVE DIRECTLY — NO FETCH */
+        const { error } = await supabase
+            .from("responses")
+            .insert({
+                session_id: sessionId || null,
+                user_name: userName || null,
+                relationship_status: relationshipStatus || "relationship",
+                flow: "relationship",
+                answers,
+                result: reflection
+            });
+
+        if (error) {
+            console.error("❌ SUPABASE ERROR:", error);
+        } else {
+            console.log("✅ RELATIONSHIP REFLECTION SAVED");
+        }
+
+        res.json({ result: reflection });
+
+    } catch (err) {
+        console.error("🔥 ANALYZE ERROR:", err);
+        res.status(500).json({ result: "Server error." });
+    }
 });
 
 /* =========================
-   START SERVER
+   SERVER START
 ========================= */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });

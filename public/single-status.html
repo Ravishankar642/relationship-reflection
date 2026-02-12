@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Experience 🌱</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container center">
+        <h1>One quick question</h1>
+
+        <p class="subtitle">
+            Have you been in a relationship before?
+        </p>
+
+        <button onclick="beenBefore()">Yes, I have 🤍</button>
+
+        <button onclick="neverBefore()" style="margin-top: 12px; background: #222;">
+            No, I haven’t 🌿
+        </button>
+
+        <p class="disclaimer">
+            There’s no right or wrong answer.
+        </p>
+    </div>
+
+    <script>
+        function beenBefore() {
+            window.location.href = "single-past.html";
+        }
+
+        function neverBefore() {
+            window.location.href = "single-first.html";
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Current Situation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container center">
+        <h1 id="greeting">📍 Current Situation</h1>
+
+        <p class="subtitle">
+            Which option best describes your situation right now?
+        </p>
+
+        <button onclick="goRelationship()">💞 I’m in a relationship</button>
+
+        <button onclick="goSingle()" style="margin-top: 10px;">
+            🌱 I’m single
+        </button>
+
+        <p class="disclaimer">
+            Your selection only affects what questions are shown.
+        </p>
+    </div>
+
+    <script>
+        const name = localStorage.getItem("userName");
+        if (name) {
+            document.getElementById("greeting").textContent =
+                `📍 ${name}, what’s your current situation?`;
+        }
+
+        function goRelationship() {
+            window.location.href = "questions.html";
+        }
+
+        function goSingle() {
+            window.location.href = "single-status.html";
+        }
+    </script>
+
+</body>
+
+</html>

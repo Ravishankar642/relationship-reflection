@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Relationship Reflection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 🔒 BETA OVERLAY -->
+    <div id="beta-overlay">
+        <div id="beta-text">
+            This website is in open beta.<br>
+            Do not share it with anyone for now.
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container center" id="main-content" style="opacity: 0;">
+        <h1>💭 Relationship Reflection</h1>
+
+        <p class="subtitle">
+            A short, honest check-in to better understand
+            your relationship dynamics.
+        </p>
+
+        <div class="info-box">
+            🕒 Takes about 2 minutes<br>
+            🧠 Thoughtful questions<br>
+            🤖 AI-generated reflection
+        </div>
+
+        <button onclick="start()">Begin</button>
+
+        <p class="disclaimer">
+            This is a reflection tool, not professional advice.
+        </p>
+    </div>
+
+    <script>
+        const overlay = document.getElementById("beta-overlay");
+        const main = document.getElementById("main-content");
+
+        // 1s delay → fade in overlay
+        setTimeout(() => {
+            overlay.classList.add("show");
+        }, 1000);
+
+        // stay visible for 3s
+        setTimeout(() => {
+            overlay.classList.remove("show");
+            overlay.classList.add("hide");
+        }, 4000);
+
+        // after fade out → reveal site
+        setTimeout(() => {
+            overlay.style.display = "none";
+            main.style.opacity = "1";
+        }, 5000);
+
+        function start() {
+            window.location.href = "name.html";
+        }
+    </script>
+
+</body>
+
+</html>

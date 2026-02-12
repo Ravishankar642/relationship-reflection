@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Name</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container center">
+        <h1>🙂 Before we begin</h1>
+
+        <p class="subtitle">
+            What should we call you?<br>
+            (This is optional.)
+        </p>
+
+        <input id="userName" placeholder="Your name" style="margin-bottom: 18px;">
+
+        <button onclick="continueFlow()">Continue</button>
+
+        <p class="disclaimer">
+            Your name is only used to personalize the experience.
+        </p>
+    </div>
+
+    <script>
+        function continueFlow() {
+            const name = document.getElementById("userName").value.trim();
+
+            if (name) {
+                localStorage.setItem("userName", name);
+            } else {
+                localStorage.removeItem("userName");
+            }
+
+            window.location.href = "status.html";
+        }
+    </script>
+
+</body>
+
+</html>

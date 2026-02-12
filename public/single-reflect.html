@@ -19,40 +19,56 @@
 
             <div class="question">
                 What went wrong?
-                <textarea></textarea>
+                <textarea id="q1"></textarea>
             </div>
 
             <div class="question">
                 Was it her fault, your fault, or both?
-                <textarea></textarea>
+                <textarea id="q2"></textarea>
             </div>
 
             <div class="question">
                 What did you ignore that you shouldn’t have?
-                <textarea></textarea>
+                <textarea id="q3"></textarea>
             </div>
 
             <div class="question">
                 If she came back today, what would you actually want?
-                <textarea></textarea>
+                <textarea id="q4"></textarea>
             </div>
 
-            <button onclick="finishReflection()">Continue</button>
+            <button onclick="submitReflection()">Continue</button>
         </div>
     </div>
 
     <script>
-        function finishReflection() {
-            const answers = [];
-            document.querySelectorAll("textarea").forEach(t => {
-                if (!t.value.trim()) {
-                    alert("Answer all questions honestly.");
-                    return;
-                }
-                answers.push(t.value.trim());
+        async function submitReflection() {
+            const answers = [
+                document.getElementById("q1").value.trim(),
+                document.getElementById("q2").value.trim(),
+                document.getElementById("q3").value.trim(),
+                document.getElementById("q4").value.trim()
+            ];
+
+            if (answers.some(a => a === "")) {
+                alert("Answer all questions honestly.");
+                return;
+            }
+
+            const userName = localStorage.getItem("userName");
+
+            await fetch("/save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userName,
+                    relationshipStatus: "single",
+                    flow: "single-reflection",
+                    answers,
+                    result: null
+                })
             });
 
-            localStorage.setItem("deepReflection", JSON.stringify(answers));
             window.location.href = "announcement-yes.html";
         }
     </script>

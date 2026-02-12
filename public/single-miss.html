@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>One Honest Question</title>
+    <title>Do You Miss Her</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,30 +11,30 @@
     <div class="page">
         <div class="container">
             <h1>Be honest.</h1>
+            <p class="subtitle">Do you still miss her?</p>
 
-            <p class="subtitle">
-                Do you still miss her?
-            </p>
-
-            <button style="font-size:16px; padding:14px;" onclick="yesMiss()">
-                Yes
-            </button>
-
-            <button class="secondary" style="margin-top:10px; font-size:12px;" onclick="noMiss()">
-                No
-            </button>
+            <button class="big" onclick="answer('yes')">Yes</button>
+            <button class="secondary small" onclick="answer('no')">No</button>
         </div>
     </div>
 
     <script>
-        function yesMiss() {
-            localStorage.setItem("missHer", "yes");
-            window.location.href = "single-reflect.html";
-        }
+        async function answer(value) {
+            const userName = localStorage.getItem("userName");
 
-        function noMiss() {
-            localStorage.setItem("missHer", "no");
-            window.location.href = "announcement-no.html";
+            await fetch("/save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userName,
+                    relationshipStatus: "single",
+                    flow: value === "yes" ? "single-miss-yes" : "single-miss-no"
+                })
+            });
+
+            window.location.href = value === "yes"
+                ? "single-reflect.html"
+                : "announcement-no.html";
         }
     </script>
 

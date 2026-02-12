@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Single Reflection</title>
-
+    <title>Single</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,39 +11,38 @@
     <div class="page">
         <div class="container">
             <h1>🌱 Being Single</h1>
+            <p class="subtitle">Have you been in a relationship before?</p>
 
-            <p class="subtitle">
-                One quick question before we continue.
-            </p>
+            <select id="past">
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
 
-            <div class="question">
-                Have you been in a relationship before?
-                <select id="past">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-
-            <button onclick="continueSingle()">Continue</button>
+            <button onclick="next()">Continue</button>
         </div>
     </div>
 
     <script>
-        function continueSingle() {
-            const value = document.getElementById("past").value;
-            if (!value) {
-                alert("Please select an option.");
-                return;
-            }
+        async function next() {
+            const past = document.getElementById("past").value;
+            if (!past) return alert("Select an option");
 
-            localStorage.setItem("beenInRelationship", value);
+            const userName = localStorage.getItem("userName");
 
-            if (value === "yes") {
-                window.location.href = "single-miss.html";
-            } else {
-                window.location.href = "single-noexp.html";
-            }
+            await fetch("/save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userName,
+                    relationshipStatus: "single",
+                    flow: past === "yes" ? "single-exp" : "single-no-exp"
+                })
+            });
+
+            window.location.href = past === "yes"
+                ? "single-miss.html"
+                : "single-noexp.html";
         }
     </script>
 

@@ -1,46 +1,86 @@
-<!DOCTYPE html>
-<html>
+* {
+box-sizing: border-box;
+}
 
-<head>
-    <title>Relationship Questions</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+body {
+margin: 0;
+padding: 0;
+background: radial-gradient(circle at top, #0a0a0a, #000000 65%);
+color: #ffffff;
+font-family: "Inter", system-ui, sans-serif;
+min-height: 100vh;
+}
 
-<body>
+/* ===== CONTAINER FIX ===== */
+.container {
+width: 440px;
+margin: 60px auto;
+padding: 32px;
+background: rgba(15, 15, 15, 0.9);
+backdrop-filter: blur(14px);
+border-radius: 16px;
+border: 1px solid rgba(255,255,255,0.08);
 
-    <div class="container">
-        <h1>🧠 Relationship Check</h1>
-        <p class="subtitle">Select what best reflects your experience.</p>
+/* 🔥 IMPORTANT FIXES */
+max-height: calc(100vh - 120px);
+overflow-y: auto;
+}
 
-        <div class="question">
-            <p>💬 We communicate openly about our problems.</p>
-            <select>
-                <option value="">Select</option>
-                <option>Strongly Disagree</option>
-                <option>Disagree</option>
-                <option>Neutral</option>
-                <option>Agree</option>
-                <option>Strongly Agree</option>
-            </select>
-        </div>
+/* Smooth scrollbar */
+.container::-webkit-scrollbar {
+width: 6px;
+}
+.container::-webkit-scrollbar-thumb {
+background: rgba(255,255,255,0.2);
+border-radius: 10px;
+}
 
-        <div class="question">
-            <p>⚖️ Conflicts usually get resolved in a healthy way.</p>
-            <select>
-                <option value="">Select</option>
-                <option>Strongly Disagree</option>
-                <option>Disagree</option>
-                <option>Neutral</option>
-                <option>Agree</option>
-                <option>Strongly Agree</option>
-            </select>
-        </div>
+h1 {
+margin-bottom: 10px;
+font-size: 24px;
+font-weight: 500;
+}
 
-        <div class="question">
-            <p>🤍 I feel emotionally supported in this relationship.</p>
-            <select>
-                <option value="">Select</option>
-                <option>Strongly Disagree</option>
-                <option>Disagree</option>
-                <option>Neutral</option>
-                <
+.subtitle {
+font-size: 14px;
+opacity: 0.8;
+margin-bottom: 24px;
+}
+
+/* ===== QUESTIONS ===== */
+.question {
+margin-bottom: 22px;
+font-size: 14px;
+}
+
+.question select {
+margin-top: 8px;
+width: 100%;
+padding: 10px;
+background: rgba(0,0,0,0.7);
+color: white;
+border: 1px solid #2a2a2a;
+border-radius: 8px;
+}
+
+/* ===== BUTTON ===== */
+button {
+width: 100%;
+padding: 13px;
+margin-top: 20px;
+background: linear-gradient(135deg, #ff4d6d, #ff2f55);
+border: none;
+border-radius: 10px;
+color: white;
+font-size: 15px;
+cursor: pointer;
+}
+
+pre {
+margin-top: 20px;
+padding: 14px;
+background: rgba(0,0,0,0.7);
+border-radius: 10px;
+font-size: 13px;
+white-space: pre-wrap;
+}

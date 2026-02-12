@@ -10,13 +10,14 @@ async function analyze() {
         answers.push(`Q${i + 1}: ${selects[i].value}`);
     }
 
+    const userName = localStorage.getItem("userName");
     const resultBox = document.getElementById("result");
     resultBox.textContent = "Analyzing…";
 
     const response = await fetch("/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers })
+        body: JSON.stringify({ answers, userName })
     });
 
     const data = await response.json();

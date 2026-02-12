@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Move On</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .announce {
+            font-size: 26px;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            animation: fade 3.5s ease forwards;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="container" style="background:none; border:none;">
+            <div class="announce">
+                Let’s go man.<br>
+                Find better women.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 3800);
+    </script>
+
+</body>
+
+</html>

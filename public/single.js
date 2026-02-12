@@ -1,4 +1,4 @@
-function submitReflection() {
+function submitSingle() {
     const selects = document.querySelectorAll("select");
     const textareas = document.querySelectorAll("textarea");
     const answers = [];
@@ -12,14 +12,16 @@ function submitReflection() {
     }
 
     for (let i = 0; i < textareas.length; i++) {
-        const val = textareas[i].value.trim();
-        if (!val) {
+        const value = textareas[i].value.trim();
+        if (!value) {
             alert("Please answer all reflection questions.");
             return;
         }
-        answers.push(`Reflection ${i + 1}: ${val}`);
+        answers.push(`Reflection ${i + 1}: ${value}`);
     }
 
     localStorage.setItem("reflectionAnswers", JSON.stringify(answers));
+    localStorage.setItem("relationshipStatus", "single");
+
     window.location.href = "result.html";
 }

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Reflection</title>
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="container">
+            <h1>🧠 Reflecting</h1>
+
+            <!-- THINKING -->
+            <div id="thinking">
+                <p>
+                    Thinking… <span id="percent">0%</span>
+                </p>
+                <div style="background:#262626; height:6px; border-radius:6px; overflow:hidden;">
+                    <div id="bar" style="
+              height:100%;
+              width:0%;
+              background:linear-gradient(135deg,#fd5949,#d6249f,#285AEB);
+              transition:width .25s ease;
+            ">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT -->
+            <div id="result" style="display:none; margin-top:20px;">
+                <h1>✨ Your Reflection</h1>
+                <pre id="resultText"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const answers = JSON.parse(localStorage.getItem("reflectionAnswers")) || [];
+
+        const bar = document.getElementById("bar");
+        const percentText = document.getElementById("percent");
+        const thinking = document.getElementById("thinking");
+        const result = document.getElementById("result");
+        const resultText = document.getElementById("resultText");
+
+        let percent = 0;
+
+        // Fake progress to 67%
+        const fake = setInterval(() => {
+            if (percent >= 67) {
+                clearInterval(fake);
+                fetchResult();
+                return;
+            }
+            percent++;
+            bar.style.width = percent + "%";
+            percentText.textContent = percent + "%";
+        }, 30);
+
+        async function fetchResult() {
+            try {
+                const response = await fetch("/analyze", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        answers,
+                        userName: localStorage.getItem("userName")
+                    })
+                });
+
+                const data = await response.json();
+
+                const finish = setInterval(() => {
+                    if (percent >= 100) {
+                        clearInterval(finish);
+                        thinking.style.display = "none";
+                        result.style.display = "block";
+                        resultText.textContent = data.result;
+                        return;
+                    }
+                    percent += 2;
+                    bar.style.width = percent + "%";
+                    percentText.textContent = percent + "%";
+                }, 25);
+            } catch (err) {
+                thinking.style.display = "none";
+                result.style.display = "block";
+                resultText.textContent =
+                    "Something went wrong. Please try again later.";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

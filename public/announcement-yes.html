@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Acceptance</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .announce {
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            animation: fade 4s ease forwards;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            25% {
+                opacity: 1;
+            }
+
+            75% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="container" style="background:none; border:none;">
+            <div class="announce">
+                It is what it is.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 4200);
+    </script>
+
+</body>
+
+</html>

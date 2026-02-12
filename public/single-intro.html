@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Single Reflection</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="container">
+            <h1>🌱 Being Single</h1>
+
+            <p class="subtitle">
+                One quick question before we continue.
+            </p>
+
+            <div class="question">
+                Have you been in a relationship before?
+                <select id="past">
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <button onclick="continueSingle()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        function continueSingle() {
+            const value = document.getElementById("past").value;
+            if (!value) {
+                alert("Please select an option.");
+                return;
+            }
+
+            localStorage.setItem("beenInRelationship", value);
+
+            if (value === "yes") {
+                window.location.href = "single-miss.html";
+            } else {
+                window.location.href = "single-noexp.html";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

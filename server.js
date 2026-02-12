@@ -2,52 +2,161 @@ import express from "express";
 import cors from "cors";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-/* ===== MIDDLEWARE ===== */
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-/* ===== ROUTES ===== */
+/*
+  Helper: simple scoring + theme detection
+*/
+function analyzeAnswers(answers) {
+    let score = 0;
+    let themes = {
+        communication: 0,
+        support: 0,
+        balance: 0,
+        pain: false,
+        fear: false
+    };
 
-// Health check (optional but useful)
-app.get("/health", (req, res) => {
-    res.json({ status: "ok" });
-});
+    answers.forEach(a => {
+        const text = a.toLowerCase();
 
-// Analyze route (mock AI response for now)
+        // MCQ scoring
+        if (text.includes("strongly agree")) score += 3;
+        else if (text.includes("agree")) score += 2;
+        else if (text.includes("partially")) score += 1;
+        else if (text.includes("disagree")) score -= 1;
+
+        // Theme detection (typed answers)
+        if (
+            text.includes("talk") ||
+            text.includes("communicat") ||
+            text.includes("listen")
+        ) {
+            themes.communication++;
+        }
+
+        if (
+            text.includes("support") ||
+            text.includes("there for me") ||
+            text.includes("alone")
+        ) {
+            themes.support++;
+        }
+
+        if (
+            text.includes("effort") ||
+            text.includes("one sided") ||
+            text.includes("unbalanced")
+        ) {
+            themes.balance++;
+        }
+
+        if (
+            text.includes("hurt") ||
+            text.includes("pain") ||
+            text.includes("ignored")
+        ) {
+            themes.pain = true;
+        }
+
+        if (
+            text.includes("fear") ||
+            text.includes("scared") ||
+            text.includes("worried")
+        ) {
+            themes.fear = true;
+        }
+    });
+
+    return { score, themes };
+}
+
+/*
+  Generate reflection text based on analysis
+*/
+function generateReflection(score, themes) {
+    // High score
+    if (score >= 6) {
+        return `
+This relationship shows many signs of emotional stability and mutual effort.
+
+You seem to feel supported and reasonably balanced overall. That doesn’t mean everything is perfect — but it does suggest that when problems arise, there is enough trust and communication to work through them.
+
+The most important question for you now is not “Is this relationship okay?” but rather:
+“How can we protect what is already working?”
+`.trim();
+    }
+
+    // Medium score
+    if (score >= 2) {
+        return `
+There is a mix of comfort and unresolved tension in this relationship.
+
+Some needs appear to be met, while others remain unspoken or inconsistently addressed. This kind of middle ground is common — but it’s also where people slowly start feeling distant if nothing changes.
+
+What matters most here is honesty:
+Are you avoiding difficult conversations to keep the peace, or because you’re unsure they would be heard?
+`.trim();
+    }
+
+    // Low score
+    let extra = "";
+
+    if (themes.pain) {
+        extra +=
+            "\n\nThere are signs of emotional pain that you may be carrying quietly. Ignoring this rarely makes it disappear.";
+    }
+
+    if (themes.fear) {
+        extra +=
+            "\n\nFear about the future is present here. That fear deserves clarity, not avoidance.";
+    }
+
+    return `
+This relationship appears to be emotionally draining more often than fulfilling.
+
+Several of your responses suggest imbalance, unmet needs, or feelings that are being suppressed rather than resolved. Over time, this can slowly erode self-worth and emotional safety.
+
+The most important reflection here is this:
+Are you staying because the relationship is growing — or because leaving feels harder than enduring?
+
+${extra}
+`.trim();
+}
+
+/*
+  MAIN ANALYZE ENDPOINT
+*/
 app.post("/analyze", (req, res) => {
-    const { answers } = req.body;
+    try {
+        const { answers, userName } = req.body;
 
-    if (!answers || !Array.isArray(answers)) {
-        return res.status(400).json({
-            result: "Invalid input. Please answer all questions."
+        if (!answers || !Array.isArray(answers)) {
+            return res.status(400).json({
+                result: "Invalid response data received."
+            });
+        }
+
+        const { score, themes } = analyzeAnswers(answers);
+        const reflection = generateReflection(score, themes);
+
+        res.json({
+            result: reflection
+        });
+    } catch (err) {
+        console.error("ANALYZE ERROR:", err);
+        res.status(500).json({
+            result: "Something went wrong while analyzing your reflection."
         });
     }
-
-    // Simple reflection logic (safe & friendly)
-    const positiveCount = answers.filter(a =>
-        a.includes("Agree")
-    ).length;
-
-    let result;
-
-    if (positiveCount >= 4) {
-        result =
-            "Your responses suggest a generally healthy and supportive relationship. Communication, trust, and effort seem to be present. Like any relationship, there’s always room to grow — but you’re on solid ground.";
-    } else if (positiveCount >= 2) {
-        result =
-            "Your responses show a mix of strengths and challenges. Some areas feel supportive, while others may need attention. Honest conversations and reflection could help bring more balance.";
-    } else {
-        result =
-            "Your responses suggest there may be unresolved challenges in the relationship. This doesn’t mean failure — but it could be a sign that communication, trust, or emotional support need more care.";
-    }
-
-    res.json({ result });
 });
 
-/* ===== START SERVER ===== */
+/*
+  SERVER
+*/
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
 });

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>One Honest Question</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="container">
+            <h1>Be honest.</h1>
+
+            <p class="subtitle">
+                Do you still miss her?
+            </p>
+
+            <button style="font-size:16px; padding:14px;" onclick="yesMiss()">
+                Yes
+            </button>
+
+            <button class="secondary" style="margin-top:10px; font-size:12px;" onclick="noMiss()">
+                No
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function yesMiss() {
+            localStorage.setItem("missHer", "yes");
+            window.location.href = "single-reflect.html";
+        }
+
+        function noMiss() {
+            localStorage.setItem("missHer", "no");
+            window.location.href = "announcement-no.html";
+        }
+    </script>
+
+</body>
+
+</html>

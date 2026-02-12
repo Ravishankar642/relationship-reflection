@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reflection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="container">
+            <h1>Alright.</h1>
+
+            <p class="subtitle">
+                Answer honestly. This stays here.
+            </p>
+
+            <div class="question">
+                What went wrong?
+                <textarea></textarea>
+            </div>
+
+            <div class="question">
+                Was it her fault, your fault, or both?
+                <textarea></textarea>
+            </div>
+
+            <div class="question">
+                What did you ignore that you shouldn’t have?
+                <textarea></textarea>
+            </div>
+
+            <div class="question">
+                If she came back today, what would you actually want?
+                <textarea></textarea>
+            </div>
+
+            <button onclick="finishReflection()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        function finishReflection() {
+            const answers = [];
+            document.querySelectorAll("textarea").forEach(t => {
+                if (!t.value.trim()) {
+                    alert("Answer all questions honestly.");
+                    return;
+                }
+                answers.push(t.value.trim());
+            });
+
+            localStorage.setItem("deepReflection", JSON.stringify(answers));
+            window.location.href = "announcement-yes.html";
+        }
+    </script>
+
+</body>
+
+</html>

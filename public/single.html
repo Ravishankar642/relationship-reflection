@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Relationship Reflection</title>
+    <title>Single Reflection</title>
 
+    <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,60 +17,65 @@
 
     <div class="page">
         <div class="container">
-            <h1>💭 Relationship Reflection</h1>
+            <h1>🌱 Being Single</h1>
 
             <p class="subtitle">
-                Answer honestly. This is for your own clarity.
+                This isn’t about loneliness. It’s about awareness.
             </p>
 
+            <!-- MCQ 1 -->
             <div class="question">
-                💬 We communicate openly about problems.
+                🧠 I feel emotionally ready for a relationship.
                 <select>
                     <option value="">Select</option>
                     <option>Strongly Agree</option>
                     <option>Agree</option>
-                    <option>Partially Agree</option>
+                    <option>Not Sure</option>
                     <option>Disagree</option>
                 </select>
             </div>
 
+            <!-- MCQ 2 -->
             <div class="question">
-                🤝 I feel emotionally supported.
+                🔁 I often think about my past relationships.
+                <select>
+                    <option value="">Select</option>
+                    <option>Often</option>
+                    <option>Sometimes</option>
+                    <option>Rarely</option>
+                    <option>Never</option>
+                </select>
+            </div>
+
+            <!-- MCQ 3 -->
+            <div class="question">
+                💬 I am comfortable being alone without feeling empty.
                 <select>
                     <option value="">Select</option>
                     <option>Strongly Agree</option>
                     <option>Agree</option>
-                    <option>Partially Agree</option>
+                    <option>Not Sure</option>
                     <option>Disagree</option>
                 </select>
             </div>
 
+            <!-- TEXT 1 -->
             <div class="question">
-                ⚖️ The effort feels balanced.
-                <select>
-                    <option value="">Select</option>
-                    <option>Strongly Agree</option>
-                    <option>Agree</option>
-                    <option>Partially Agree</option>
-                    <option>Disagree</option>
-                </select>
+                💭 What do you think has been the biggest pattern in your past relationships or situationships?
+                <textarea placeholder="Type honestly..."></textarea>
             </div>
 
+            <!-- TEXT 2 -->
             <div class="question">
-                💔 What is something that hurts but is rarely discussed?
-                <textarea placeholder="Type your answer here..."></textarea>
+                🔍 What do you feel you need to work on before entering your next relationship?
+                <textarea placeholder="Type honestly..."></textarea>
             </div>
 
-            <div class="question">
-                🌱 If nothing changed for 2 years, how would you feel?
-                <textarea placeholder="Type your answer here..."></textarea>
-            </div>
-
-            <button onclick="submitReflection()">Reflect</button>
+            <button onclick="submitSingle()">Reflect</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="single.js"></script>
 </body>
 
 </html>
